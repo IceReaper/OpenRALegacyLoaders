@@ -1,4 +1,5 @@
 ﻿#region Copyright & License Information
+
 /*
  * Copyright (c) The OpenRA Developers and Contributors
  * This file is part of OpenRA, which is free software. It is made
@@ -7,6 +8,7 @@
  * the License, or (at your option) any later version. For more
  * information, see COPYING.
  */
+
 #endregion
 
 using OpenRA.Graphics;
@@ -20,7 +22,7 @@ namespace OpenRA.Mods.Example.Rendering
 	public class PlayerColorShiftInfo : TraitInfo
 	{
 		[PaletteReference(true)]
-		[FieldLoader.RequireAttribute]
+		[FieldLoader.Require]
 		[Desc("The name of the palette to base off.")]
 		public readonly string BasePalette = "";
 
@@ -36,7 +38,10 @@ namespace OpenRA.Mods.Example.Rendering
 		[Desc("Saturation reference for the color shift.")]
 		public readonly float ReferenceSaturation = 1;
 
-		public override object Create(ActorInitializer init) { return new PlayerColorShift(this); }
+		public override object Create(ActorInitializer init)
+		{
+			return new PlayerColorShift(this);
+		}
 	}
 
 	public class PlayerColorShift : ILoadsPlayerPalettes
@@ -48,14 +53,16 @@ namespace OpenRA.Mods.Example.Rendering
 			this.info = info;
 		}
 
-		void ILoadsPlayerPalettes.LoadPlayerPalettes(WorldRenderer worldRenderer, string playerName, Color color, bool replaceExisting)
+		void ILoadsPlayerPalettes.LoadPlayerPalettes(WorldRenderer worldRenderer, string playerName, Color color,
+			bool replaceExisting)
 		{
-			var (_, hue, saturation, _) = color.ToAhsv();
+			var (_, hue, saturation, value) = color.ToAhsv();
 
 			worldRenderer.SetPaletteColorShift(
 				info.BasePalette + playerName,
 				hue - info.ReferenceHue,
 				saturation - info.ReferenceSaturation,
+				value,
 				info.MinHue,
 				info.MaxHue);
 		}

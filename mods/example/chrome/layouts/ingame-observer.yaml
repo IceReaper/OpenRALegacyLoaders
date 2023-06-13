@@ -1,0 +1,5 @@
+Container@OBSERVER_WIDGETS:
+	Logic: MenuButtonsChromeLogic
+	Children:
+		MenuButton@OPTIONS_BUTTON:
+			Key: escape

@@ -40,43 +40,34 @@ namespace OpenRA.Mods.Example.Rendering
 		public override object Create(ActorInitializer init) { return new ColorPickerColorShift(this); }
 	}
 
-	public class ColorPickerColorShift : ILoadsPalettes, ITickRender
+	public class ColorPickerColorShift : ITickRender
 	{
 		readonly ColorPickerColorShiftInfo info;
 		readonly ColorPickerManagerInfo colorManager;
 		Color color;
+		Color? newColor;
 
 		public ColorPickerColorShift(ColorPickerColorShiftInfo info)
 		{
 			colorManager = Game.ModData.DefaultRules.Actors[SystemActors.World].TraitInfo<ColorPickerManagerInfo>();
+			colorManager.OnColorPickerColorUpdate += color => newColor = color;
 			this.info = info;
-		}
-
-		void ILoadsPalettes.LoadPalettes(WorldRenderer worldRenderer)
-		{
-			color = colorManager.Color;
-			var (_, hue, saturation, _) = color.ToAhsv();
-
-			worldRenderer.SetPaletteColorShift(
-				info.BasePalette,
-				hue - info.ReferenceHue,
-				saturation - info.ReferenceSaturation,
-				info.MinHue,
-				info.MaxHue);
 		}
 
 		void ITickRender.TickRender(WorldRenderer worldRenderer, Actor self)
 		{
-			if (color == colorManager.Color)
+			if (newColor == null || newColor == color)
 				return;
 
-			color = colorManager.Color;
-			var (_, hue, saturation, _) = color.ToAhsv();
+			color = newColor.Value;
+			newColor = null;
+			var (_, hue, saturation, value) = color.ToAhsv();
 
 			worldRenderer.SetPaletteColorShift(
 				info.BasePalette,
 				hue - info.ReferenceHue,
 				saturation - info.ReferenceSaturation,
+				value,
 				info.MinHue,
 				info.MaxHue);
 		}

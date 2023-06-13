@@ -12,8 +12,8 @@ MapFolders:
 	example|maps: System
 
 Assemblies:
-	^BinDir|OpenRA.Mods.Common.dll
 	^BinDir|OpenRA.Mods.Example.dll
+	^BinDir|OpenRA.Mods.Common.dll
 
 AssetBrowser:
 	AudioExtensions: .wav
