@@ -22,7 +22,7 @@ AssetBrowser:
 
 SupportsMapsFrom: Example
 
-LoadScreen: BlankLoadScreen
+LoadScreen: GameDetectorLoadScreen
 
 ServerTraits:
 	LobbyCommands
