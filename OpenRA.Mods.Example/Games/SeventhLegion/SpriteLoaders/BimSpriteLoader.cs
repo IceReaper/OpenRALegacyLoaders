@@ -50,7 +50,8 @@ namespace OpenRA.Mods.Example.Games.SeventhLegion.SpriteLoaders
 			}
 		}
 
-		public bool TryParseSprite(Stream stream, string filename, out ISpriteFrame[] frames, out TypeDictionary metadata)
+		public bool TryParseSprite(Stream stream, string filename, out ISpriteFrame[] frames,
+			out TypeDictionary metadata)
 		{
 			if (!filename.EndsWith(".bim", StringComparison.OrdinalIgnoreCase) || stream is not FileStream fileStream)
 			{
@@ -61,7 +62,9 @@ namespace OpenRA.Mods.Example.Games.SeventhLegion.SpriteLoaders
 			}
 
 			// TODO verify and fix palette mappings!
-			var col = new Col(File.OpenRead(Path.Combine(Path.GetDirectoryName(fileStream.Name) ?? "", "pal1.col")));
+			var col = new Col(File.OpenRead(
+				FileSystem.FileSystem.ResolveCaseInsensitivePath(
+					Path.Combine(Path.GetDirectoryName(fileStream.Name) ?? "", "pal1.col"))));
 
 			frames = new Bim(stream).Frames.Select(frame => new BimSpriteFrame(col, frame)).ToArray<ISpriteFrame>();
 			metadata = null;
