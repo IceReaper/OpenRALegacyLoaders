@@ -34,12 +34,12 @@ namespace OpenRA.Mods.Example.Games.Earth2140.FileFormats
 			}
 		}
 
-		sealed class Entry
+		sealed class WdEntry
 		{
 			public readonly uint Offset;
 			public readonly uint Length;
 
-			public Entry(uint offset, uint length)
+			public WdEntry(uint offset, uint length)
 			{
 				Offset = offset;
 				Length = length;
@@ -48,7 +48,7 @@ namespace OpenRA.Mods.Example.Games.Earth2140.FileFormats
 
 		public string Name { get; }
 		public IEnumerable<string> Contents => index.Keys;
-		readonly Dictionary<string, Entry> index = new();
+		readonly Dictionary<string, WdEntry> index = new();
 
 		readonly Stream stream;
 
@@ -68,7 +68,7 @@ namespace OpenRA.Mods.Example.Games.Earth2140.FileFormats
 					var offset = stream.ReadUInt32();
 
 					if (offset > lastOffset)
-						index.Add($"{i}.smp", new Entry(lastOffset + 0x400, offset - lastOffset));
+						index.Add($"{i}.smp", new WdEntry(lastOffset + 0x400, offset - lastOffset));
 
 					lastOffset = offset;
 				}
@@ -77,7 +77,7 @@ namespace OpenRA.Mods.Example.Games.Earth2140.FileFormats
 			{
 				for (var i = 0; i < numFiles; i++)
 				{
-					var entry = new Entry(stream.ReadUInt32(), stream.ReadUInt32());
+					var entry = new WdEntry(stream.ReadUInt32(), stream.ReadUInt32());
 
 					stream.ReadUInt32(); // 0x00
 					stream.ReadUInt32(); // 0x00

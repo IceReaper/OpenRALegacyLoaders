@@ -31,6 +31,12 @@ namespace OpenRA.Mods.Example.LoadScreens
 			var root = ModData.ModFiles.MountedPackages.Skip(1).First().Name;
 			var assetBrowserModData = ModData.Manifest.Get<AssetBrowser>();
 
+			var options = new EnumerationOptions
+			{
+				MatchCasing = MatchCasing.CaseInsensitive,
+				RecurseSubdirectories = true
+			};
+
 			foreach (var gameType in typeof(IGameInfo).Assembly.GetTypes())
 			{
 				if (!gameType.IsClass || !gameType.IsAssignableTo(typeof(IGameInfo)))
@@ -62,7 +68,7 @@ namespace OpenRA.Mods.Example.LoadScreens
 				{
 					if (filter.Contains('*'))
 					{
-						foreach (var file in Directory.GetFiles(gamePath, filter, SearchOption.AllDirectories))
+						foreach (var file in Directory.GetFiles(gamePath, filter, options))
 							ModData.ModFiles.Mount(file, $"{game.Folder} {Path.GetRelativePath(gamePath, file)}");
 					}
 					else
