@@ -25,8 +25,13 @@ namespace OpenRA.Mods.Example.Games.JurassicWar.FileFormats
 			Colors = new Color[stream.Length / 3];
 
 			for (var i = 0; i < Colors.Length; i++)
-				Colors[i] = Color.FromArgb(i == 0 ? 0x00 : 0xff, stream.ReadByte(), stream.ReadByte(),
-					stream.ReadByte());
+			{
+				Colors[i] = Color.FromArgb(
+					i == 0 ? 0x00 : 0xff,
+					stream.ReadUInt8(),
+					stream.ReadUInt8(),
+					stream.ReadUInt8());
+			}
 		}
 	}
 }

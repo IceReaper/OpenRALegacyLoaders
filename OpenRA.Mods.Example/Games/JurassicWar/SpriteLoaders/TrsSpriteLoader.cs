@@ -33,16 +33,16 @@ namespace OpenRA.Mods.Example.Games.JurassicWar.SpriteLoaders
 
 			public bool DisableExportPadding => true;
 
-			public TrsSpriteFrame(TrsFrame trsFrame, Pal palette)
+			public TrsSpriteFrame(TrsFrame frame, Pal palette)
 			{
-				var width = trsFrame.Width;
-				var height = trsFrame.Height;
+				var width = frame.Width;
+				var height = frame.Height;
 
 				Size = new Size(width, height);
 				FrameSize = new Size(width, height);
-				Offset = new float2(width / 2f + trsFrame.X1, height / 2f + trsFrame.Y1);
+				Offset = new float2(width / 2f + frame.X1, height / 2f + frame.Y1);
 
-				Data = trsFrame.Pixels.SelectMany(pixel =>
+				Data = frame.Pixels.SelectMany(pixel =>
 				{
 					var color = palette.Colors[pixel];
 

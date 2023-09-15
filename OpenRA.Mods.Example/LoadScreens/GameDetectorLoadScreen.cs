@@ -19,6 +19,7 @@ using OpenRA.Graphics;
 using OpenRA.Mods.Common.LoadScreens;
 using OpenRA.Mods.Example.Games;
 using OpenRA.Video;
+using FS = OpenRA.FileSystem.FileSystem;
 
 namespace OpenRA.Mods.Example.LoadScreens
 {
@@ -73,9 +74,9 @@ namespace OpenRA.Mods.Example.LoadScreens
 					}
 					else
 					{
-						var path = Path.Combine(gamePath, filter);
+						var path = FS.ResolveCaseInsensitivePath(Path.Combine(gamePath, filter));
 
-						if (File.Exists(path) || Directory.Exists(path))
+						if (path != null)
 							ModData.ModFiles.Mount(path, $"{game.Folder} {Path.GetRelativePath(gamePath, path)}");
 					}
 				}

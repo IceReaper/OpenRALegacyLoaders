@@ -119,7 +119,7 @@ namespace OpenRA.Mods.Example.Games.Dominion.FileFormats
 				}
 			}
 
-			if (stream.ReadByte() != 0 || stream.Position < stream.Length)
+			if (stream.ReadUInt8() != 0 || stream.Position < stream.Length)
 				throw new Exception("SPR: Unknown data!");
 		}
 	}
