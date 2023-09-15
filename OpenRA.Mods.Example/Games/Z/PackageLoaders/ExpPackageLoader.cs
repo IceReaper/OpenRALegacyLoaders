@@ -36,7 +36,6 @@ namespace OpenRA.Mods.Example.Games.Z.PackageLoaders
 				valid = magic == "JMP2";
 			}
 
-
 			if (!valid)
 			{
 				package = null;

@@ -47,8 +47,6 @@ namespace OpenRA.Mods.Example.Games.Dominion.SpriteLoaders
 			frames = new ISpriteFrame[tl2.Tiles.Length];
 			var palette = new Color[256];
 
-
-
 			foreach (var package in Game.ModData.ModFiles.MountedPackages)
 			{
 				if (!package.Name.EndsWith("DOMINION.000"))
